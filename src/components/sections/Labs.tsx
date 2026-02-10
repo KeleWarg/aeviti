@@ -43,7 +43,7 @@ export function Labs() {
           </FadeIn>
           <TextReveal
             as="h2"
-            className="font-display text-[42px] leading-[1.12] font-normal text-charcoal tracking-tight"
+            className="font-display text-[28px] md:text-[42px] leading-[1.12] font-normal text-charcoal tracking-tight"
             delay={0.1}
             stagger={0.15}
           >
@@ -60,7 +60,7 @@ export function Labs() {
           {/* ── Floating UI cards (staggered entrances + internal micro-animations) ── */}
 
           {/* Top-left: Wellness Score */}
-          <FadeIn variant="slide-right" delay={0.3} x={30} className="absolute left-0 top-[8%] z-10">
+          <FadeIn variant="slide-right" delay={0.3} x={30} className="absolute left-0 top-[8%] z-10 hidden md:block">
             <div className="w-[210px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 -rotate-3">
               <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-2">
                 Wellness Score
@@ -99,7 +99,7 @@ export function Labs() {
           </FadeIn>
 
           {/* Top-right: Metabolic Health ring */}
-          <FadeIn variant="slide-left" delay={0.45} x={30} className="absolute right-0 top-[5%] z-10">
+          <FadeIn variant="slide-left" delay={0.45} x={30} className="absolute right-0 top-[5%] z-10 hidden md:block">
             <div className="w-[230px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 rotate-2">
               <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-3">
                 Metabolic Health
@@ -136,7 +136,7 @@ export function Labs() {
           </FadeIn>
 
           {/* Mid-left: Heart Health card */}
-          <FadeIn variant="slide-right" delay={0.6} x={30} className="absolute left-[-2%] top-[45%] z-10">
+          <FadeIn variant="slide-right" delay={0.6} x={30} className="absolute left-[-2%] top-[45%] z-10 hidden md:block">
             <div className="w-[195px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 rotate-1">
               <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-2">
                 Heart Health
@@ -178,7 +178,7 @@ export function Labs() {
           </FadeIn>
 
           {/* Right-mid: Action Plan */}
-          <FadeIn variant="slide-left" delay={0.75} x={30} className="absolute right-[-1%] top-[40%] z-10">
+          <FadeIn variant="slide-left" delay={0.75} x={30} className="absolute right-[-1%] top-[40%] z-10 hidden md:block">
             <div className="w-[215px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 -rotate-1">
               <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-2.5">
                 Action Plan
@@ -217,7 +217,7 @@ export function Labs() {
           </FadeIn>
 
           {/* Bottom-left: Biological Age */}
-          <FadeIn variant="slide-right" delay={0.9} x={30} className="absolute left-[8%] bottom-[5%] z-10">
+          <FadeIn variant="slide-right" delay={0.9} x={30} className="absolute left-[8%] bottom-[5%] z-10 hidden md:block">
             <div className="w-[185px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 rotate-2">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2 h-2 rounded-full bg-sky" />
@@ -253,7 +253,7 @@ export function Labs() {
           </FadeIn>
 
           {/* Bottom-right: Inflammation */}
-          <FadeIn variant="slide-left" delay={1.05} x={30} className="absolute right-[7%] bottom-[8%] z-10">
+          <FadeIn variant="slide-left" delay={1.05} x={30} className="absolute right-[7%] bottom-[8%] z-10 hidden md:block">
             <div className="w-[190px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 -rotate-2">
               <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-2">
                 Inflammation
@@ -318,6 +318,11 @@ export function Labs() {
               width={2000}
               height={1334}
               className="w-auto max-h-[520px] mx-auto"
+              style={v ? {
+                animation: "gentle-float 4s ease-in-out infinite",
+                animationDelay: "1.6s",
+                animationFillMode: "both",
+              } : undefined}
               quality={100}
               priority
             />
@@ -326,16 +331,16 @@ export function Labs() {
 
         {/* Dual CTAs */}
         <FadeIn variant="fade-up" delay={0.5} y={20}>
-          <div className="flex items-center justify-center gap-4 mt-10 pb-20 relative z-20">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 mt-10 pb-20 relative z-20">
             <a
               href="#waitlist"
-              className="font-body text-[14px] font-medium text-white bg-charcoal px-8 py-3.5 rounded-full hover:bg-rich-black transition-colors shadow-[0_4px_16px_rgba(0,0,0,0.15)]"
+              className="w-full md:w-auto font-body text-[14px] font-medium text-white bg-charcoal px-8 py-3.5 rounded-full hover:bg-rich-black transition-colors shadow-[0_4px_16px_rgba(0,0,0,0.15)] text-center"
             >
               Start my labs
             </a>
             <a
               href="#baseline"
-              className="font-body text-[14px] font-medium text-charcoal bg-white/60 backdrop-blur-sm border border-charcoal/10 px-8 py-3.5 rounded-full hover:bg-white/80 transition-colors"
+              className="w-full md:w-auto font-body text-[14px] font-medium text-charcoal bg-white/60 backdrop-blur-sm border border-charcoal/10 px-8 py-3.5 rounded-full hover:bg-white/80 transition-colors text-center"
             >
               Learn more
             </a>
@@ -346,10 +351,10 @@ export function Labs() {
       {/* ── Three-column feature block ── */}
       <div className="max-w-[1100px] mx-auto px-6 pb-12">
         <FadeIn variant="scale-up" duration={1}>
-          <div className="bg-[#dcc5a9]/40 rounded-[28px] border border-[#c9a87c]/15 px-10 py-16 flex items-center gap-6">
+          <div className="bg-[#dcc5a9]/40 rounded-[28px] border border-[#c9a87c]/15 px-10 py-16 flex flex-col md:flex-row items-center gap-6">
             {/* Left text */}
-            <div className="flex-1 text-right pr-6">
-              <h3 className="font-display text-[36px] font-bold text-charcoal leading-tight mb-2">
+            <div className="flex-1 text-center md:text-right pr-0 md:pr-6">
+              <h3 className="font-display text-[24px] md:text-[36px] font-bold text-charcoal leading-tight mb-2">
                 Find your
                 <br />
                 baseline
@@ -362,8 +367,14 @@ export function Labs() {
             </div>
 
             {/* Center phone mockup */}
-            <div className="w-[250px] shrink-0">
-              <div className="bg-white rounded-[28px] shadow-[0_12px_40px_rgba(0,0,0,0.1)] border border-white/80 p-2.5 mx-auto w-[230px]">
+            <div className="w-[250px] shrink-0 hidden md:block" style={{ perspective: "900px" }}>
+              <div
+                className="bg-white rounded-[28px] shadow-[0_12px_40px_rgba(0,0,0,0.1)] border border-white/80 p-2.5 mx-auto w-[230px]"
+                style={{
+                  animation: "phone-rotate-3d 5s cubic-bezier(0.4, 0, 0.2, 1) infinite",
+                  transformStyle: "preserve-3d",
+                }}
+              >
                 {/* Phone notch */}
                 <div className="w-[70px] h-[18px] bg-charcoal rounded-full mx-auto mb-2.5" />
                 {/* Screen content */}
@@ -409,8 +420,8 @@ export function Labs() {
             </div>
 
             {/* Right text */}
-            <div className="flex-1 pl-6">
-              <h3 className="font-display text-[36px] font-bold text-charcoal leading-tight mb-2">
+            <div className="flex-1 text-center md:text-left pl-0 md:pl-6">
+              <h3 className="font-display text-[24px] md:text-[36px] font-bold text-charcoal leading-tight mb-2">
                 Plan your
                 <br />
                 breakthrough
@@ -432,12 +443,12 @@ export function Labs() {
 
       {/* ── Two-card grid ── */}
       <div className="max-w-[1100px] mx-auto px-6 pb-12">
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Card 1: Biomarkers */}
           <FadeIn variant="scale-up">
             <div className="relative bg-[#dcc5a9]/35 rounded-[28px] border border-[#c9a87c]/12 overflow-hidden min-h-[460px] flex flex-col hover-scale">
               <div className="px-10 pt-10 pb-4 z-10 relative">
-                <h3 className="font-display text-[42px] font-bold text-charcoal leading-[1.08]">
+                <h3 className="font-display text-[28px] md:text-[42px] font-bold text-charcoal leading-[1.08]">
                   Test 82+
                   <br />
                   biomarkers
@@ -536,7 +547,7 @@ export function Labs() {
           <FadeIn variant="scale-up" delay={0.1}>
             <div className="relative bg-[#dcc5a9]/35 rounded-[28px] border border-[#c9a87c]/12 overflow-hidden min-h-[460px] flex flex-col hover-scale">
               <div className="px-10 pt-10 pb-4 z-10 relative">
-                <h3 className="font-display text-[42px] font-bold text-charcoal leading-[1.08]">
+                <h3 className="font-display text-[28px] md:text-[42px] font-bold text-charcoal leading-[1.08]">
                   Interpreted
                   <br />
                   with care

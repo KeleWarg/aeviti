@@ -5,7 +5,7 @@ export function Baseline() {
   return (
     <section
       id="baseline"
-      className="relative z-10 px-12 py-section-md"
+      className="relative z-10 px-6 md:px-12 py-section-md"
     >
       <div className="max-w-[1100px] mx-auto">
         <FadeIn variant="fade-up" duration={0.7} y={20}>
@@ -30,7 +30,7 @@ export function Baseline() {
         </FadeIn>
 
         {/* Open 3-column layout with horizontal rules and vertical dividers */}
-        <div className="border-y border-terra grid grid-cols-3">
+        <div className="border-y border-terra grid grid-cols-1 md:grid-cols-3">
           {/* Column 1: Interpretation */}
           <FadeIn variant="fade-up" delay={0} className="h-full">
             <div className="px-8 py-10 h-full">
@@ -48,7 +48,7 @@ export function Baseline() {
 
           {/* Column 2: Action */}
           <FadeIn variant="fade-up" delay={0.1} className="h-full">
-            <div className="px-8 py-10 h-full border-l border-terra">
+            <div className="px-8 py-10 h-full border-t md:border-t-0 md:border-l border-terra">
               <div className="font-body text-body-xs font-bold text-terra mb-3.5">02</div>
               <h3 className="font-display text-[24px] font-medium text-charcoal mb-2 leading-tight">
                 Actionable next steps
@@ -63,7 +63,7 @@ export function Baseline() {
 
           {/* Column 3: Steadiness */}
           <FadeIn variant="fade-up" delay={0.2} className="h-full">
-            <div className="px-8 py-10 h-full border-l border-terra">
+            <div className="px-8 py-10 h-full border-t md:border-t-0 md:border-l border-terra">
               <div className="font-body text-body-xs font-bold text-terra mb-3.5">03</div>
               <h3 className="font-display text-[24px] font-medium text-charcoal mb-2 leading-tight">
                 Steady progress

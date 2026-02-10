@@ -102,7 +102,7 @@ export function Hero() {
       {/* Inner container — this is what recedes in z-space on scroll */}
       <div
         ref={innerRef}
-        className="relative min-h-screen flex flex-col justify-center px-12 pt-36 pb-24 overflow-hidden bg-gradient-to-br from-rich-black via-petrol-dark to-petrol"
+        className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-24 md:pt-36 pb-16 md:pb-24 overflow-hidden bg-gradient-to-br from-rich-black via-petrol-dark to-petrol"
         style={{ willChange: "transform, filter, border-radius", transformOrigin: "center center" }}
       >
       {/* Video reel background */}
@@ -136,11 +136,11 @@ export function Hero() {
 
       {/* Ambient effects */}
       <div
-        className="ambient-orb w-[500px] h-[500px] top-[8%] right-[12%] z-10"
+        className="ambient-orb w-[500px] h-[500px] top-[8%] right-[12%] z-10 hidden md:block"
         style={{ background: `radial-gradient(circle, ${colors.sand.DEFAULT}08 0%, transparent 60%)` }}
       />
       <div
-        className="ambient-orb w-[350px] h-[350px] bottom-[10%] left-[8%] z-10"
+        className="ambient-orb w-[350px] h-[350px] bottom-[10%] left-[8%] z-10 hidden md:block"
         style={{ background: `radial-gradient(circle, ${colors.sage.DEFAULT}05 0%, transparent 60%)` }}
       />
       <div className="grain-overlay z-10" />
@@ -149,7 +149,7 @@ export function Hero() {
       <div className="relative z-20 max-w-[1100px] mx-auto w-full flex flex-col items-center text-center">
         <TextReveal
           as="h1"
-          className="font-display text-display-xl font-medium text-white mb-6"
+          className="font-display text-[40px] md:text-display-xl font-medium text-white mb-6"
           delay={0.2}
           stagger={0.15}
           duration={0.9}

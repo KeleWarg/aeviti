@@ -3,11 +3,11 @@ import { footerLinks, colors } from "@/lib/tokens";
 export function Footer() {
   return (
     <footer
-      className="px-12 pt-16 pb-9"
+      className="px-6 md:px-12 pt-16 pb-9"
       style={{ background: `linear-gradient(160deg, ${colors.petrol.dark} 0%, ${colors.petrol.DEFAULT} 100%)` }}
     >
       <div className="max-w-[1100px] mx-auto">
-        <div className="grid grid-cols-[1.5fr_1fr_1fr] gap-14 mb-12">
+        <div className="grid grid-cols-1 gap-8 md:gap-0 md:grid-cols-[1.5fr_1fr_1fr] mb-12">
           {/* Brand */}
           <div>
             <div className="font-display text-[28px] font-medium text-white mb-2">

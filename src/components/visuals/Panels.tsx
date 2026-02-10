@@ -5,6 +5,7 @@
  * Inspired by Function Health's approach of showing mini product UIs.
  */
 
+import { useState, useEffect } from "react";
 import { colors } from "@/lib/tokens";
 import { useInView } from "@/lib/hooks";
 
@@ -122,9 +123,18 @@ export function BiomarkerChartVisual() {
   );
 }
 
-/* ── Protocol / action items (animated) ── */
+/* ── Protocol / action items (animated + looping) ── */
 export function ProtocolVisual() {
   const [ref, v] = useInView(0.15);
+  const [looping, setLooping] = useState(false);
+
+  useEffect(() => {
+    if (!v) return;
+    const timer = setTimeout(() => setLooping(true), 2500);
+    return () => clearTimeout(timer);
+  }, [v]);
+
+  const SMOOTH = "cubic-bezier(0.4, 0, 0.2, 1)";
 
   const items = [
     { emoji: "🥗", label: "Nutrition", desc: "Anti-inflammatory foods, omega-3 rich...", color: colors.sage.DEFAULT },
@@ -140,16 +150,21 @@ export function ProtocolVisual() {
           <div
             key={i}
             className="flex items-center gap-3 bg-white rounded-[10px] px-3.5 py-2.5 border border-stone/[0.15]"
-            style={{
+            style={looping ? {
+              animation: `baseline-row-reveal 8s ${SMOOTH} ${i * 0.12}s infinite`,
+            } : {
               opacity: v ? 1 : 0,
               transform: v ? "translateY(0)" : "translateY(14px)",
               transition: tr(["opacity", "transform"], 0.7, EASE_OUT_EXPO, d),
             }}
           >
-            {/* Emoji icon — spring scale-in */}
+            {/* Emoji icon — spring scale-in, then loops */}
             <div
               className="w-[34px] h-[34px] rounded-[9px] shrink-0 flex items-center justify-center text-[15px]"
-              style={{
+              style={looping ? {
+                background: item.color + "15",
+                animation: `baseline-icon-reveal 8s ${SMOOTH} ${i * 0.12 + 0.08}s infinite`,
+              } : {
                 background: item.color + "15",
                 transform: v ? "scale(1)" : "scale(0.5)",
                 opacity: v ? 1 : 0,
@@ -169,16 +184,27 @@ export function ProtocolVisual() {
   );
 }
 
-/* ── Biomarker result card (animated) ── */
+/* ── Biomarker result card (animated + looping) ── */
 export function ResultCardVisual() {
   const [ref, v] = useInView(0.15);
+  const [looping, setLooping] = useState(false);
+
+  useEffect(() => {
+    if (!v) return;
+    const timer = setTimeout(() => setLooping(true), 2500);
+    return () => clearTimeout(timer);
+  }, [v]);
+
+  const SMOOTH = "cubic-bezier(0.4, 0, 0.2, 1)";
 
   return (
     <div ref={ref} className="bg-white rounded-[10px] p-3.5 border border-stone/[0.15] mt-4">
       {/* Title + category + pill */}
       <div className="flex justify-between items-center mb-2.5">
         <div
-          style={{
+          style={looping ? {
+            animation: `baseline-text-reveal 7s ${SMOOTH} infinite`,
+          } : {
             opacity: v ? 1 : 0,
             transform: v ? "translateY(0)" : "translateY(8px)",
             transition: tr(["opacity", "transform"], 0.7, EASE_OUT_EXPO, 0),
@@ -187,10 +213,12 @@ export function ResultCardVisual() {
           <div className="font-body text-body-xs font-semibold text-charcoal">Apolipoprotein B</div>
           <div className="font-body text-[10px] text-warm-gray">Heart & metabolic</div>
         </div>
-        {/* Optimal pill — spring scale-in */}
+        {/* Optimal pill — spring scale-in, then loops */}
         <div
           className="bg-sage/[0.12] text-success font-mono text-[10px] font-semibold px-2 py-0.5 rounded-full"
-          style={{
+          style={looping ? {
+            animation: `baseline-pill-reveal 7s ${SMOOTH} 0.15s infinite`,
+          } : {
             opacity: v ? 1 : 0,
             transform: v ? "scale(1)" : "scale(0.7)",
             transition: tr(["opacity", "transform"], 0.6, SPRING, 0.15),
@@ -203,7 +231,9 @@ export function ResultCardVisual() {
       {/* Value */}
       <div
         className="flex items-baseline gap-1 mb-2"
-        style={{
+        style={looping ? {
+          animation: `baseline-text-reveal 7s ${SMOOTH} 0.25s infinite`,
+        } : {
           opacity: v ? 1 : 0,
           transform: v ? "translateY(0)" : "translateY(10px)",
           transition: tr(["opacity", "transform"], 0.7, EASE_OUT_EXPO, 0.25),
@@ -216,24 +246,31 @@ export function ResultCardVisual() {
       {/* Range bar */}
       <div
         className="w-full h-[5px] bg-cream rounded-full relative"
-        style={{
+        style={looping ? {
+          animation: `baseline-fade 7s ${SMOOTH} 0.3s infinite`,
+        } : {
           opacity: v ? 1 : 0,
           transition: tr(["opacity"], 0.5, EASE_OUT_EXPO, 0.3),
         }}
       >
-        {/* Fill zone — scaleX from left */}
+        {/* Fill zone — scaleX from left, then loops */}
         <div
           className="absolute left-[20%] right-[15%] top-0 h-[5px] bg-sage/20 rounded-full"
-          style={{
+          style={looping ? {
+            transformOrigin: "left",
+            animation: `baseline-bar-fill 7s ${SMOOTH} 0.4s infinite`,
+          } : {
             transform: v ? "scaleX(1)" : "scaleX(0)",
             transformOrigin: "left",
             transition: tr(["transform"], 0.8, EASE_OUT_EXPO, 0.4),
           }}
         />
-        {/* Indicator dot — spring pop */}
+        {/* Indicator dot — spring pop, then loops */}
         <div
           className="absolute left-[52%] top-[-3px] w-[11px] h-[11px] bg-sage rounded-full border-2 border-white"
-          style={{
+          style={looping ? {
+            animation: `baseline-dot-reveal 7s ${SMOOTH} 0.55s infinite`,
+          } : {
             opacity: v ? 1 : 0,
             transform: v ? "scale(1)" : "scale(0)",
             transition: tr(["opacity", "transform"], 0.5, SPRING, 0.55),
@@ -244,9 +281,18 @@ export function ResultCardVisual() {
   );
 }
 
-/* ── Progress bar chart (animated) ── */
+/* ── Progress bar chart (animated + looping) ── */
 export function TimelineVisual() {
   const [ref, v] = useInView(0.15);
+  const [looping, setLooping] = useState(false);
+
+  useEffect(() => {
+    if (!v) return;
+    const timer = setTimeout(() => setLooping(true), 2500);
+    return () => clearTimeout(timer);
+  }, [v]);
+
+  const SMOOTH = "cubic-bezier(0.4, 0, 0.2, 1)";
 
   const heights = [30, 42, 55, 62, 70];
   const months = ["Jan", "Mar", "Jun", "Sep", "Dec"];
@@ -258,7 +304,15 @@ export function TimelineVisual() {
           <div
             key={i}
             className="flex-1 rounded-t"
-            style={{
+            style={looping ? {
+              height: h,
+              background:
+                i === heights.length - 1
+                  ? `linear-gradient(to top, ${colors.terra.DEFAULT}, ${colors.terra.light})`
+                  : `linear-gradient(to top, ${colors.sand.DEFAULT}40, ${colors.sand.DEFAULT}20)`,
+              transformOrigin: "bottom",
+              animation: `baseline-bar-grow 7.5s ${SMOOTH} ${i * 0.08}s infinite`,
+            } : {
               height: h,
               background:
                 i === heights.length - 1
@@ -276,7 +330,9 @@ export function TimelineVisual() {
           <div
             key={i}
             className="flex-1 text-center font-mono text-[9px] text-stone"
-            style={{
+            style={looping ? {
+              animation: `baseline-fade 7.5s ${SMOOTH} ${i * 0.08 + 0.1}s infinite`,
+            } : {
               opacity: v ? 1 : 0,
               transition: tr(["opacity"], 0.5, EASE_OUT_EXPO, i * 0.08 + 0.1),
             }}

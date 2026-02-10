@@ -28,7 +28,7 @@ const steps = [
 
 export function Approach() {
   return (
-    <section className="bg-ivory px-12 py-section-md">
+    <section className="bg-ivory px-6 md:px-12 py-section-md">
       <div className="max-w-[1100px] mx-auto">
         <div className="max-w-[520px] mb-12">
           <FadeIn variant="fade-up" y={16}>
@@ -36,7 +36,7 @@ export function Approach() {
           </FadeIn>
           <TextReveal
             as="h2"
-            className="font-display text-[42px] font-normal text-charcoal leading-[1.12] tracking-tight mb-3.5"
+            className="font-display text-[28px] md:text-[42px] font-normal text-charcoal leading-[1.12] tracking-tight mb-3.5"
             delay={0.1}
           >
             Designed for safety, steadiness,{" "}
@@ -50,7 +50,7 @@ export function Approach() {
           </FadeIn>
         </div>
 
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {steps.map((step, i) => (
             <FadeIn key={step.num} variant="scale-up" delay={i * 0.12}>
               <div className="bg-cream rounded-card p-8 border border-stone/[0.12] min-h-[400px] card-hover">

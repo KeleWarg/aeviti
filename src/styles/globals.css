@@ -162,6 +162,87 @@
   100% { opacity: 1; transform: translateY(0); }
 }
 
+/* ── Baseline card looping micro-animations ── */
+
+/* ResultCard: title + value text reveal loop */
+@keyframes baseline-text-reveal {
+  0%, 82% { opacity: 1; transform: translateY(0); }
+  91% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ResultCard: optimal pill scale-in loop */
+@keyframes baseline-pill-reveal {
+  0%, 82% { opacity: 1; transform: scale(1); }
+  91% { opacity: 0; transform: scale(0.7); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ResultCard: range bar fill loop (scaleX from left) */
+@keyframes baseline-bar-fill {
+  0%, 82% { transform: scaleX(1); }
+  91% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+/* ResultCard: indicator dot pop loop */
+@keyframes baseline-dot-reveal {
+  0%, 82% { opacity: 1; transform: scale(1); }
+  91% { opacity: 0; transform: scale(0); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ResultCard / Timeline: simple opacity fade loop */
+@keyframes baseline-fade {
+  0%, 82% { opacity: 1; }
+  91% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* ProtocolVisual: row slide-up reveal loop */
+@keyframes baseline-row-reveal {
+  0%, 80% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ProtocolVisual: icon spring scale loop */
+@keyframes baseline-icon-reveal {
+  0%, 80% { opacity: 1; transform: scale(1); }
+  90% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* TimelineVisual / Trust bars: bar grow loop (scaleY from bottom) */
+@keyframes baseline-bar-grow {
+  0%, 82% { transform: scaleY(1); }
+  91% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+
+/* Trust map: gentle scale pulse loop */
+@keyframes baseline-map-pulse {
+  0%, 82% { opacity: 1; transform: scale(1); }
+  91% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ── Phone mockup 3D rotate ── */
+@keyframes phone-rotate-3d {
+  0%   { transform: rotateY(0deg) rotateX(0deg); }
+  25%  { transform: rotateY(8deg) rotateX(2deg); }
+  50%  { transform: rotateY(0deg) rotateX(0deg); }
+  75%  { transform: rotateY(-8deg) rotateX(-2deg); }
+  100% { transform: rotateY(0deg) rotateX(0deg); }
+}
+
+/* ── Gentle float animation for lifestyle photo ── */
+@keyframes gentle-float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
 /* ── Marquee & pulse animations (plain CSS — not Tailwind-managed) ── */
 @keyframes marquee {
   0% { transform: translateX(0); }

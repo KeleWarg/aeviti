@@ -4,13 +4,13 @@ import { FadeIn, TextReveal, Overline, EmailCapture } from "@/components/ui";
 
 export function CTA() {
   return (
-    <section id="waitlist" className="bg-ivory px-12 py-section-md">
+    <section id="waitlist" className="bg-ivory px-6 md:px-12 py-section-md">
       <FadeIn variant="fade-up" y={24}>
         <div className="max-w-[600px] mx-auto text-center">
           <Overline>Get early access</Overline>
           <TextReveal
             as="h2"
-            className="font-display text-[42px] font-normal text-charcoal leading-[1.15] tracking-tight mb-3.5"
+            className="font-display text-[28px] md:text-[42px] font-normal text-charcoal leading-[1.15] tracking-tight mb-3.5"
             delay={0.1}
           >
             Join the waitlist for{" "}

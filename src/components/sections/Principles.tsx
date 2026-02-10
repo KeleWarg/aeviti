@@ -10,7 +10,7 @@ const principles = [
 export function Principles() {
   return (
     <section
-      className="relative px-12 py-section-md overflow-hidden"
+      className="relative px-6 md:px-12 py-section-md overflow-hidden"
       style={{ background: `linear-gradient(160deg, ${colors.petrol.dark} 0%, ${colors.petrol.DEFAULT} 100%)` }}
     >
       <div className="grain-overlay" />
@@ -29,7 +29,7 @@ export function Principles() {
           </TextReveal>
         </div>
 
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {principles.map((p, i) => (
             <FadeIn key={p.title} variant="blur-up" delay={i * 0.1}>
               <div className="bg-white/[0.04] rounded-card p-9 border border-white/[0.06] text-center card-hover">

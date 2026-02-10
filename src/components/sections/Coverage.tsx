@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { FadeIn, TextReveal } from "@/components/ui";
+import { useInView } from "@/lib/hooks";
 import { categories, categoryColors, colors } from "@/lib/tokens";
 
 const categorySubtitles: Record<string, string> = {
@@ -22,10 +23,17 @@ const categoryImages: Record<string, string> = {
 /** Card width + gap used for scroll calculations */
 const GAP = 20;
 
+/* ── Animation helpers ── */
+const EASE_OUT_EXPO = "cubic-bezier(0.16, 1, 0.3, 1)";
+function tr(props: string[], dur: number, ease: string, delay: number) {
+  return props.map((p) => `${p} ${dur}s ${ease} ${delay}s`).join(", ");
+}
+
 export function Coverage() {
   const colorMap: Record<string, string> = categoryColors;
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [cardsRef, cardsVisible] = useInView(0.15);
 
   /** Get the width of one card from the DOM */
   const getCardWidth = useCallback(() => {
@@ -87,7 +95,7 @@ export function Coverage() {
             <div>
               <TextReveal
                 as="h2"
-                className="font-display text-[42px] leading-[1.12] font-normal text-charcoal tracking-tight mb-4 max-w-[600px]"
+                className="font-display text-[28px] md:text-[42px] leading-[1.12] font-normal text-charcoal tracking-tight mb-4 max-w-[600px]"
                 delay={0.3}
                 stagger={0.12}
               >
@@ -106,7 +114,7 @@ export function Coverage() {
 
             {/* Navigation arrows */}
             <FadeIn variant="fade-up" delay={0.5} y={12}>
-              <div className="flex items-center gap-2 shrink-0 pb-1">
+              <div className="hidden md:flex items-center gap-2 shrink-0 pb-1">
                 <button
                   type="button"
                   onClick={() => scrollToIndex(activeIndex - 1)}
@@ -149,7 +157,7 @@ export function Coverage() {
       </div>
 
       {/* ── Carousel track — bleeds to viewport edge ── */}
-      <FadeIn variant="fade-up" delay={0.3} y={24}>
+      <div ref={cardsRef}>
         <div
           ref={trackRef}
           className="flex gap-5 overflow-x-auto pb-8 hide-scrollbar"
@@ -158,35 +166,101 @@ export function Coverage() {
             paddingRight: "max(24px, calc((100vw - 1100px) / 2 + 24px))",
           }}
         >
-          {categories.map((cat) => {
+          {categories.map((cat, cardIndex) => {
             const color = colorMap[cat.key] || colors.sand.DEFAULT;
             const subtitle = categorySubtitles[cat.key] || cat.desc;
+            // Each card staggers by 0.12s after a base delay
+            const cardDelay = 0.15 + cardIndex * 0.12;
 
             return (
               <div
                 key={cat.key}
                 className="group shrink-0"
-                style={{ width: 420 }}
+                style={{
+                  width: "min(420px, 85vw)",
+                  opacity: cardsVisible ? 1 : 0,
+                  transform: cardsVisible
+                    ? "translateY(0) scale(1)"
+                    : "translateY(32px) scale(0.97)",
+                  transition: tr(
+                    ["opacity", "transform"],
+                    0.85,
+                    EASE_OUT_EXPO,
+                    cardDelay
+                  ),
+                }}
               >
                 <div className="bg-cream rounded-[20px] border border-stone/10 flex flex-col overflow-hidden card-hover h-full">
-                  {/* Text content */}
+                  {/* Text content — staggered internals */}
                   <div className="px-7 pt-7 pb-3">
-                    <h3 className="font-display text-[24px] font-bold text-charcoal leading-tight">
+                    <h3
+                      className="font-display text-[24px] font-bold text-charcoal leading-tight"
+                      style={{
+                        opacity: cardsVisible ? 1 : 0,
+                        transform: cardsVisible
+                          ? "translateY(0)"
+                          : "translateY(12px)",
+                        transition: tr(
+                          ["opacity", "transform"],
+                          0.7,
+                          EASE_OUT_EXPO,
+                          cardDelay + 0.1
+                        ),
+                      }}
+                    >
                       {cat.name}
                     </h3>
-                    <p className="font-body text-[15px] font-light text-warm-gray leading-snug mt-0.5">
+                    <p
+                      className="font-body text-[15px] font-light text-warm-gray leading-snug mt-0.5"
+                      style={{
+                        opacity: cardsVisible ? 1 : 0,
+                        transform: cardsVisible
+                          ? "translateY(0)"
+                          : "translateY(10px)",
+                        transition: tr(
+                          ["opacity", "transform"],
+                          0.7,
+                          EASE_OUT_EXPO,
+                          cardDelay + 0.18
+                        ),
+                      }}
+                    >
                       {subtitle}
                     </p>
                     <span
                       className="inline-block mt-2.5 font-body text-[11px] font-semibold tabular-nums"
-                      style={{ color }}
+                      style={{
+                        color,
+                        opacity: cardsVisible ? 1 : 0,
+                        transform: cardsVisible
+                          ? "translateY(0)"
+                          : "translateY(8px)",
+                        transition: tr(
+                          ["opacity", "transform"],
+                          0.6,
+                          EASE_OUT_EXPO,
+                          cardDelay + 0.25
+                        ),
+                      }}
                     >
                       {cat.count} markers
                     </span>
                   </div>
 
-                  {/* Image */}
-                  <div className="relative mx-4 mb-4 h-[200px] rounded-2xl overflow-hidden bg-stone/[0.07] border border-stone/[0.05]">
+                  {/* Image — scale reveal */}
+                  <div
+                    className="relative mx-4 mb-4 h-[200px] rounded-2xl overflow-hidden bg-stone/[0.07] border border-stone/[0.05]"
+                    style={{
+                      opacity: cardsVisible ? 1 : 0,
+                      transform: cardsVisible ? "scale(1)" : "scale(0.94)",
+                      transition: tr(
+                        ["opacity", "transform"],
+                        0.8,
+                        EASE_OUT_EXPO,
+                        cardDelay + 0.2
+                      ),
+                    }}
+                  >
                     <Image
                       src={categoryImages[cat.key]}
                       alt={`${cat.name} category`}
@@ -196,13 +270,25 @@ export function Coverage() {
                     />
                   </div>
 
-                  {/* Footer: tags + CTA */}
+                  {/* Footer: tags + CTA — staggered */}
                   <div className="px-7 pb-6 flex items-end justify-between gap-4 mt-auto">
                     <div className="flex flex-wrap gap-1.5 flex-1">
-                      {cat.markers.map((m) => (
+                      {cat.markers.map((m, mi) => (
                         <span
                           key={m}
                           className="font-body text-[11px] font-medium text-warm-gray/60 bg-white border border-stone/10 px-2.5 py-1 rounded-lg"
+                          style={{
+                            opacity: cardsVisible ? 1 : 0,
+                            transform: cardsVisible
+                              ? "translateY(0)"
+                              : "translateY(8px)",
+                            transition: tr(
+                              ["opacity", "transform"],
+                              0.5,
+                              EASE_OUT_EXPO,
+                              cardDelay + 0.32 + mi * 0.04
+                            ),
+                          }}
                         >
                           {m}
                         </span>
@@ -211,7 +297,19 @@ export function Coverage() {
                     <button
                       type="button"
                       className="shrink-0 font-body text-[13px] font-medium text-white px-5 py-2.5 rounded-full transition-colors hover:opacity-90"
-                      style={{ background: color }}
+                      style={{
+                        background: color,
+                        opacity: cardsVisible ? 1 : 0,
+                        transform: cardsVisible
+                          ? "translateY(0)"
+                          : "translateY(10px)",
+                        transition: tr(
+                          ["opacity", "transform"],
+                          0.6,
+                          EASE_OUT_EXPO,
+                          cardDelay + 0.38
+                        ),
+                      }}
                     >
                       Learn more
                     </button>
@@ -234,11 +332,20 @@ export function Coverage() {
                   ? "w-6 bg-terra"
                   : "w-[6px] bg-stone/30 hover:bg-stone/50"
               }`}
+              style={{
+                opacity: cardsVisible ? 1 : 0,
+                transition: tr(
+                  ["opacity"],
+                  0.5,
+                  EASE_OUT_EXPO,
+                  0.6 + i * 0.06
+                ),
+              }}
               aria-label={`Go to ${cat.name}`}
             />
           ))}
         </div>
-      </FadeIn>
+      </div>
     </section>
   );
 }

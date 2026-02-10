@@ -2,9 +2,9 @@ import { FadeIn } from "@/components/ui";
 
 export function Signal() {
   return (
-    <section className="bg-cream px-12 py-section-md">
+    <section className="bg-cream px-6 md:px-12 py-section-md">
       <FadeIn variant="scale-up" duration={1}>
-        <div className="max-w-[900px] mx-auto bg-ivory rounded-2xl p-14 border border-stone/[0.18] flex justify-between items-center gap-12">
+        <div className="max-w-[900px] mx-auto bg-ivory rounded-2xl p-6 md:p-14 border border-stone/[0.18] flex justify-between items-center gap-12">
           <div className="flex-1">
             <h2 className="font-display text-[40px] font-normal text-charcoal leading-[1.15] tracking-tight mb-4">
               Less noise.{" "}

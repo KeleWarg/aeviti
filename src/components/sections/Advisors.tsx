@@ -45,7 +45,7 @@ export function Advisors() {
           </FadeIn>
           <TextReveal
             as="h2"
-            className="font-display text-[42px] leading-[1.12] font-normal text-charcoal tracking-tight mb-4 max-w-[600px] mx-auto"
+            className="font-display text-[28px] md:text-[42px] leading-[1.12] font-normal text-charcoal tracking-tight mb-4 max-w-[600px] mx-auto"
             delay={0.2}
             stagger={0.12}
           >

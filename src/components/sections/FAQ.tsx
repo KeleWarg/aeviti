@@ -26,7 +26,7 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="bg-cream px-12 py-section-md">
+    <section className="bg-cream px-6 md:px-12 py-section-md">
       <div className="max-w-[680px] mx-auto">
         <div className="text-center mb-12">
           <FadeIn variant="fade-up" y={16}>
@@ -34,7 +34,7 @@ export function FAQ() {
           </FadeIn>
           <TextReveal
             as="h2"
-            className="font-display text-[42px] font-normal text-charcoal leading-[1.12] tracking-tight"
+            className="font-display text-[28px] md:text-[42px] font-normal text-charcoal leading-[1.12] tracking-tight"
             delay={0.1}
           >
             Clear answers,{" "}
