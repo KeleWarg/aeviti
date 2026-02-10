@@ -296,19 +296,32 @@ export function Labs() {
           </FadeIn>
 
           {/* ── Central lifestyle photo ── */}
-          <FadeIn variant="blur-in" delay={0.15} duration={1.2}>
-            <div className="relative mx-auto z-[5]">
-              <Image
-                src="/images/run-lifestyle-opt.png"
-                alt="Active lifestyle"
-                width={2000}
-                height={1334}
-                className="w-auto max-h-[520px] mx-auto"
-                quality={100}
-                priority
-              />
-            </div>
-          </FadeIn>
+          <div
+            className="relative mx-auto z-[5]"
+            style={{
+              perspective: "1200px",
+              opacity: v ? 1 : 0,
+              transform: v
+                ? "rotateZ(0deg) scale(1)"
+                : "rotateZ(8deg) scale(0.92)",
+              transition: tr(
+                ["opacity", "transform"],
+                1.4,
+                EASE_OUT_EXPO,
+                0.15
+              ),
+            }}
+          >
+            <Image
+              src="/images/run-lifestyle-opt.png"
+              alt="Active lifestyle"
+              width={2000}
+              height={1334}
+              className="w-auto max-h-[520px] mx-auto"
+              quality={100}
+              priority
+            />
+          </div>
         </div>
 
         {/* Dual CTAs */}
