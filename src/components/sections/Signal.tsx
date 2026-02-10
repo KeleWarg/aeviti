@@ -4,9 +4,9 @@ export function Signal() {
   return (
     <section className="bg-cream px-6 md:px-12 py-section-md">
       <FadeIn variant="scale-up" duration={1}>
-        <div className="max-w-[900px] mx-auto bg-ivory rounded-2xl p-6 md:p-14 border border-stone/[0.18] flex justify-between items-center gap-12">
+        <div className="max-w-[900px] mx-auto bg-ivory rounded-2xl p-6 md:p-14 border border-stone/[0.18] flex flex-col md:flex-row md:justify-between md:items-center gap-8 md:gap-12">
           <div className="flex-1">
-            <h2 className="font-display text-[40px] font-normal text-charcoal leading-[1.15] tracking-tight mb-4">
+            <h2 className="font-display text-[32px] md:text-[40px] font-normal text-charcoal leading-[1.15] tracking-tight mb-4">
               Less noise.{" "}
               <span className="text-terra font-medium">More signal.</span>
             </h2>
@@ -16,7 +16,7 @@ export function Signal() {
               calm, steady next step.
             </p>
           </div>
-          <div className="flex gap-2.5 flex-wrap max-w-[280px]">
+          <div className="flex gap-2.5 flex-wrap md:max-w-[280px]">
             {["Conservative guidance", "Long-term view", "Clear priorities"].map(
               (t, i) => (
                 <div

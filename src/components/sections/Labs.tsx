@@ -327,6 +327,225 @@ export function Labs() {
               priority
             />
           </div>
+
+          {/* ── Mobile-only: horizontal card strip ── */}
+          <div className="md:hidden mt-6 -mx-6 px-6 overflow-x-auto hide-scrollbar relative z-10">
+            <div className="flex gap-3 snap-x snap-mandatory pb-2" style={{ width: "max-content" }}>
+              {/* Wellness Score */}
+              <FadeIn variant="fade-up" delay={0.2}>
+                <div className="w-[160px] snap-start bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-sm border border-white/50 shrink-0">
+                  <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-2">
+                    Wellness Score
+                  </div>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-[28px] font-bold text-charcoal leading-none">78</span>
+                    <span className="text-[11px] text-warm-gray">/100</span>
+                  </div>
+                  <div className="mt-2 h-[5px] rounded-full bg-stone/20 overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-terra"
+                      style={looping ? {
+                        width: "78%",
+                        animation: `labs-bar-fill 7s ${EASE_SMOOTH} infinite`,
+                      } : {
+                        width: v ? "78%" : "0%",
+                        transition: tr(["width"], 1, EASE_OUT_EXPO, 0.5),
+                      }}
+                    />
+                  </div>
+                  <div
+                    className="text-[10px] text-terra font-medium mt-1.5"
+                    style={looping ? {
+                      animation: `labs-text-reveal 7s ${EASE_SMOOTH} 0.15s infinite`,
+                    } : {
+                      opacity: v ? 1 : 0,
+                      transition: tr(["opacity"], 0.6, EASE_OUT_EXPO, 0.6),
+                    }}
+                  >
+                    On track
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Metabolic Health */}
+              <FadeIn variant="fade-up" delay={0.28}>
+                <div className="w-[160px] snap-start bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-sm border border-white/50 shrink-0">
+                  <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-2">
+                    Metabolic Health
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <svg width="40" height="40" viewBox="0 0 48 48" className="shrink-0">
+                      <circle cx="24" cy="24" r="19" fill="none" stroke="#D4CEC4" strokeWidth="5" opacity="0.3" />
+                      <circle
+                        cx="24" cy="24" r="19"
+                        fill="none" stroke="#00774D" strokeWidth="5"
+                        strokeDasharray="95 120"
+                        strokeLinecap="round"
+                        transform="rotate(-90 24 24)"
+                        style={looping ? {
+                          strokeDashoffset: 0,
+                          animation: `labs-ring-draw 8s ${EASE_SMOOTH} infinite`,
+                        } : {
+                          strokeDashoffset: v ? 0 : 95,
+                          transition: tr(["stroke-dashoffset"], 1.2, EASE_OUT_EXPO, 0.65),
+                        }}
+                      />
+                    </svg>
+                    <div>
+                      <div className="text-[12px] font-semibold text-charcoal">On track</div>
+                      <div className="text-[9px] text-warm-gray">14/18 optimal</div>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Heart Health */}
+              <FadeIn variant="fade-up" delay={0.36}>
+                <div className="w-[160px] snap-start bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-sm border border-white/50 shrink-0">
+                  <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-2">
+                    Heart Health
+                  </div>
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-terra" />
+                    <span className="text-[11px] font-medium text-charcoal">Apolipoprotein B</span>
+                  </div>
+                  <div
+                    className="flex items-baseline gap-1"
+                    style={looping ? {
+                      animation: `labs-value-reveal 7.5s ${EASE_SMOOTH} infinite`,
+                    } : {
+                      opacity: v ? 1 : 0,
+                      transform: v ? "translateY(0)" : "translateY(6px)",
+                      transition: tr(["opacity", "transform"], 0.7, EASE_OUT_EXPO, 0.8),
+                    }}
+                  >
+                    <span className="text-[20px] font-bold text-charcoal leading-none">82</span>
+                    <span className="text-[10px] text-warm-gray">mg/dL</span>
+                  </div>
+                  <div
+                    className="text-[10px] text-terra font-medium mt-1"
+                    style={looping ? {
+                      animation: `labs-text-reveal 7.5s ${EASE_SMOOTH} 0.15s infinite`,
+                    } : {
+                      opacity: v ? 1 : 0,
+                      transition: tr(["opacity"], 0.6, EASE_OUT_EXPO, 0.9),
+                    }}
+                  >
+                    Optimal range
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Action Plan */}
+              <FadeIn variant="fade-up" delay={0.44}>
+                <div className="w-[160px] snap-start bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-sm border border-white/50 shrink-0">
+                  <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-2">
+                    Action Plan
+                  </div>
+                  <div className="space-y-1.5">
+                    {[
+                      { icon: "🥗", label: "Nutrition", status: "Active" },
+                      { icon: "💊", label: "Supplements", status: "Active" },
+                      { icon: "🏃", label: "Movement", status: "Pending" },
+                    ].map((item, i) => (
+                      <div
+                        key={item.label}
+                        className="flex items-center gap-1.5 text-[10px]"
+                        style={looping ? {
+                          animation: `labs-row-reveal 8.5s ${EASE_SMOOTH} ${i * 0.12}s infinite`,
+                        } : {
+                          opacity: v ? 1 : 0,
+                          transform: v ? "translateY(0)" : "translateY(8px)",
+                          transition: tr(["opacity", "transform"], 0.6, EASE_OUT_EXPO, 0.9 + i * 0.08),
+                        }}
+                      >
+                        <span>{item.icon}</span>
+                        <span className="text-charcoal font-medium">{item.label}</span>
+                        <span className={`ml-auto text-[8px] font-semibold ${item.status === "Active" ? "text-terra" : "text-warm-gray"}`}>
+                          {item.status}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Biological Age */}
+              <FadeIn variant="fade-up" delay={0.52}>
+                <div className="w-[160px] snap-start bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-sm border border-white/50 shrink-0">
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-sky" />
+                    <span className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider">
+                      Biological Age
+                    </span>
+                  </div>
+                  <div
+                    className="text-[22px] font-bold text-charcoal leading-none"
+                    style={looping ? {
+                      animation: `labs-value-reveal 8s ${EASE_SMOOTH} infinite`,
+                    } : {
+                      opacity: v ? 1 : 0,
+                      transform: v ? "translateY(0)" : "translateY(6px)",
+                      transition: tr(["opacity", "transform"], 0.7, EASE_OUT_EXPO, 1.0),
+                    }}
+                  >
+                    2.5 yrs
+                  </div>
+                  <div
+                    className="text-[10px] text-terra font-medium mt-1"
+                    style={looping ? {
+                      animation: `labs-text-reveal 8s ${EASE_SMOOTH} 0.15s infinite`,
+                    } : {
+                      opacity: v ? 1 : 0,
+                      transition: tr(["opacity"], 0.6, EASE_OUT_EXPO, 1.1),
+                    }}
+                  >
+                    younger than average
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Inflammation */}
+              <FadeIn variant="fade-up" delay={0.6}>
+                <div className="w-[160px] snap-start bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-sm border border-white/50 shrink-0">
+                  <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-2">
+                    Inflammation
+                  </div>
+                  <svg width="128" height="28" viewBox="0 0 140 32" className="mb-1">
+                    <polyline
+                      points="0,28 30,22 60,18 90,12 120,6 140,4"
+                      fill="none"
+                      stroke="#7A9E8E"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={looping ? {
+                        strokeDasharray: 145,
+                        strokeDashoffset: 0,
+                        animation: `labs-sparkline-draw 8.5s ${EASE_SMOOTH} infinite`,
+                      } : {
+                        strokeDasharray: 145,
+                        strokeDashoffset: v ? 0 : 145,
+                        transition: tr(["stroke-dashoffset"], 1.2, EASE_OUT_EXPO, 1.15),
+                      }}
+                    />
+                  </svg>
+                  <div
+                    className="flex items-center gap-1"
+                    style={looping ? {
+                      animation: `labs-text-reveal 8.5s ${EASE_SMOOTH} 0.2s infinite`,
+                    } : {
+                      opacity: v ? 1 : 0,
+                      transition: tr(["opacity"], 0.6, EASE_OUT_EXPO, 1.3),
+                    }}
+                  >
+                    <span className="text-[10px] text-sage font-semibold">↓</span>
+                    <span className="text-[9px] text-sage font-medium">Trending down</span>
+                  </div>
+                </div>
+              </FadeIn>
+            </div>
+          </div>
         </div>
 
         {/* Dual CTAs */}
