@@ -3,6 +3,7 @@ import {
   Hero,
   Baseline,
   Coverage,
+  Advisors,
   Labs,
   Signal,
   Approach,
@@ -22,6 +23,7 @@ export default function Home() {
       <div className="relative z-10 bg-ivory">
         <Baseline />
         <Coverage />
+        <Advisors />
         <Labs />
         <Signal />
         <Approach />

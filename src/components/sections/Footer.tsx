@@ -1,8 +1,11 @@
-import { footerLinks } from "@/lib/tokens";
+import { footerLinks, colors } from "@/lib/tokens";
 
 export function Footer() {
   return (
-    <footer className="bg-rich-black px-12 pt-16 pb-9">
+    <footer
+      className="px-12 pt-16 pb-9"
+      style={{ background: `linear-gradient(160deg, ${colors.petrol.dark} 0%, ${colors.petrol.DEFAULT} 100%)` }}
+    >
       <div className="max-w-[1100px] mx-auto">
         <div className="grid grid-cols-[1.5fr_1fr_1fr] gap-14 mb-12">
           {/* Brand */}

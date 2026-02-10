@@ -1,7 +1,28 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { FadeIn, TextReveal } from "@/components/ui";
+import { useInView } from "@/lib/hooks";
+
+/* ── Animation helpers ── */
+const EASE_OUT_EXPO = "cubic-bezier(0.16, 1, 0.3, 1)";
+const EASE_SMOOTH = "cubic-bezier(0.4, 0, 0.2, 1)";
+function tr(props: string[], dur: number, ease: string, delay: number) {
+  return props.map((p) => `${p} ${dur}s ${ease} ${delay}s`).join(", ");
+}
 
 export function Labs() {
+  const [heroRef, v] = useInView(0.1);
+  const [looping, setLooping] = useState(false);
+
+  /* After all entrance animations finish (~2.5s), switch to looping mode */
+  useEffect(() => {
+    if (!v) return;
+    const timer = setTimeout(() => setLooping(true), 3000);
+    return () => clearTimeout(timer);
+  }, [v]);
+
   return (
     <section
       id="labs"
@@ -35,12 +56,12 @@ export function Labs() {
         </div>
 
         {/* Photo + floating cards container */}
-        <FadeIn variant="blur-in" delay={0.3} duration={1.2}>
-          <div className="relative max-w-[1000px] mx-auto min-h-[540px]">
-            {/* ── Floating UI cards ── */}
+        <div ref={heroRef} className="relative max-w-[1000px] mx-auto min-h-[540px]">
+          {/* ── Floating UI cards (staggered entrances + internal micro-animations) ── */}
 
-            {/* Top-left: Wellness Score */}
-            <div className="absolute left-0 top-[8%] z-10 w-[210px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 -rotate-3">
+          {/* Top-left: Wellness Score */}
+          <FadeIn variant="slide-right" delay={0.3} x={30} className="absolute left-0 top-[8%] z-10">
+            <div className="w-[210px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 -rotate-3">
               <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-2">
                 Wellness Score
               </div>
@@ -50,49 +71,56 @@ export function Labs() {
                 </span>
                 <span className="text-[13px] text-warm-gray">/100</span>
               </div>
+              {/* Progress bar — fills from 0% to 78%, then loops */}
               <div className="mt-2.5 h-[6px] rounded-full bg-stone/20 overflow-hidden">
                 <div
                   className="h-full rounded-full bg-terra"
-                  style={{ width: "78%" }}
+                  style={looping ? {
+                    width: "78%",
+                    animation: `labs-bar-fill 7s ${EASE_SMOOTH} infinite`,
+                  } : {
+                    width: v ? "78%" : "0%",
+                    transition: tr(["width"], 1, EASE_OUT_EXPO, 0.6),
+                  }}
                 />
               </div>
-              <div className="text-[10px] text-terra font-medium mt-1.5">
+              <div
+                className="text-[10px] text-terra font-medium mt-1.5"
+                style={looping ? {
+                  animation: `labs-text-reveal 7s ${EASE_SMOOTH} 0.15s infinite`,
+                } : {
+                  opacity: v ? 1 : 0,
+                  transition: tr(["opacity"], 0.6, EASE_OUT_EXPO, 0.7),
+                }}
+              >
                 On track
               </div>
             </div>
+          </FadeIn>
 
-            {/* Top-right: Metabolic Health ring */}
-            <div className="absolute right-0 top-[5%] z-10 w-[230px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 rotate-2">
+          {/* Top-right: Metabolic Health ring */}
+          <FadeIn variant="slide-left" delay={0.45} x={30} className="absolute right-0 top-[5%] z-10">
+            <div className="w-[230px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 rotate-2">
               <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-3">
                 Metabolic Health
               </div>
               <div className="flex items-center gap-3">
-                {/* Mini ring chart */}
-                <svg
-                  width="48"
-                  height="48"
-                  viewBox="0 0 48 48"
-                  className="shrink-0"
-                >
+                {/* Ring chart — draws in via strokeDashoffset */}
+                <svg width="48" height="48" viewBox="0 0 48 48" className="shrink-0">
+                  <circle cx="24" cy="24" r="19" fill="none" stroke="#D4CEC4" strokeWidth="5" opacity="0.3" />
                   <circle
-                    cx="24"
-                    cy="24"
-                    r="19"
-                    fill="none"
-                    stroke="#D4CEC4"
-                    strokeWidth="5"
-                    opacity="0.3"
-                  />
-                  <circle
-                    cx="24"
-                    cy="24"
-                    r="19"
-                    fill="none"
-                    stroke="#00774D"
-                    strokeWidth="5"
+                    cx="24" cy="24" r="19"
+                    fill="none" stroke="#00774D" strokeWidth="5"
                     strokeDasharray="95 120"
                     strokeLinecap="round"
                     transform="rotate(-90 24 24)"
+                    style={looping ? {
+                      strokeDashoffset: 0,
+                      animation: `labs-ring-draw 8s ${EASE_SMOOTH} infinite`,
+                    } : {
+                      strokeDashoffset: v ? 0 : 95,
+                      transition: tr(["stroke-dashoffset"], 1.2, EASE_OUT_EXPO, 0.75),
+                    }}
                   />
                 </svg>
                 <div>
@@ -105,9 +133,11 @@ export function Labs() {
                 </div>
               </div>
             </div>
+          </FadeIn>
 
-            {/* Mid-left: Heart Health card */}
-            <div className="absolute left-[-2%] top-[45%] z-10 w-[195px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 rotate-1">
+          {/* Mid-left: Heart Health card */}
+          <FadeIn variant="slide-right" delay={0.6} x={30} className="absolute left-[-2%] top-[45%] z-10">
+            <div className="w-[195px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 rotate-1">
               <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-2">
                 Heart Health
               </div>
@@ -117,31 +147,59 @@ export function Labs() {
                   Apolipoprotein B
                 </span>
               </div>
-              <div className="flex items-baseline gap-1">
+              {/* Value — fades up, then loops */}
+              <div
+                className="flex items-baseline gap-1"
+                style={looping ? {
+                  animation: `labs-value-reveal 7.5s ${EASE_SMOOTH} infinite`,
+                } : {
+                  opacity: v ? 1 : 0,
+                  transform: v ? "translateY(0)" : "translateY(8px)",
+                  transition: tr(["opacity", "transform"], 0.7, EASE_OUT_EXPO, 0.9),
+                }}
+              >
                 <span className="text-[22px] font-bold text-charcoal leading-none">
                   82
                 </span>
                 <span className="text-[11px] text-warm-gray">mg/dL</span>
               </div>
-              <div className="text-[10px] text-terra font-medium mt-1">
+              <div
+                className="text-[10px] text-terra font-medium mt-1"
+                style={looping ? {
+                  animation: `labs-text-reveal 7.5s ${EASE_SMOOTH} 0.15s infinite`,
+                } : {
+                  opacity: v ? 1 : 0,
+                  transition: tr(["opacity"], 0.6, EASE_OUT_EXPO, 1.0),
+                }}
+              >
                 Optimal range
               </div>
             </div>
+          </FadeIn>
 
-            {/* Right-mid: Action Plan */}
-            <div className="absolute right-[-1%] top-[40%] z-10 w-[215px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 -rotate-1">
+          {/* Right-mid: Action Plan */}
+          <FadeIn variant="slide-left" delay={0.75} x={30} className="absolute right-[-1%] top-[40%] z-10">
+            <div className="w-[215px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 -rotate-1">
               <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-2.5">
                 Action Plan
               </div>
+              {/* Rows — staggered fade-up, then loops */}
               <div className="space-y-2">
                 {[
                   { icon: "🥗", label: "Nutrition", status: "Active" },
                   { icon: "💊", label: "Supplements", status: "Active" },
                   { icon: "🏃", label: "Movement", status: "Pending" },
-                ].map((item) => (
+                ].map((item, i) => (
                   <div
                     key={item.label}
                     className="flex items-center gap-2 text-[11px]"
+                    style={looping ? {
+                      animation: `labs-row-reveal 8.5s ${EASE_SMOOTH} ${i * 0.12}s infinite`,
+                    } : {
+                      opacity: v ? 1 : 0,
+                      transform: v ? "translateY(0)" : "translateY(10px)",
+                      transition: tr(["opacity", "transform"], 0.6, EASE_OUT_EXPO, 1.05 + i * 0.1),
+                    }}
                   >
                     <span>{item.icon}</span>
                     <span className="text-charcoal font-medium">
@@ -156,35 +214,52 @@ export function Labs() {
                 ))}
               </div>
             </div>
+          </FadeIn>
 
-            {/* Bottom-left: Biological Age */}
-            <div className="absolute left-[8%] bottom-[5%] z-10 w-[185px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 rotate-2">
+          {/* Bottom-left: Biological Age */}
+          <FadeIn variant="slide-right" delay={0.9} x={30} className="absolute left-[8%] bottom-[5%] z-10">
+            <div className="w-[185px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 rotate-2">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2 h-2 rounded-full bg-sky" />
                 <span className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider">
                   Biological Age
                 </span>
               </div>
-              <div className="text-[24px] font-bold text-charcoal leading-none">
+              {/* Value — fades up, then loops */}
+              <div
+                className="text-[24px] font-bold text-charcoal leading-none"
+                style={looping ? {
+                  animation: `labs-value-reveal 8s ${EASE_SMOOTH} infinite`,
+                } : {
+                  opacity: v ? 1 : 0,
+                  transform: v ? "translateY(0)" : "translateY(8px)",
+                  transition: tr(["opacity", "transform"], 0.7, EASE_OUT_EXPO, 1.2),
+                }}
+              >
                 2.5 yrs
               </div>
-              <div className="text-[10px] text-terra font-medium mt-1">
+              <div
+                className="text-[10px] text-terra font-medium mt-1"
+                style={looping ? {
+                  animation: `labs-text-reveal 8s ${EASE_SMOOTH} 0.15s infinite`,
+                } : {
+                  opacity: v ? 1 : 0,
+                  transition: tr(["opacity"], 0.6, EASE_OUT_EXPO, 1.3),
+                }}
+              >
                 younger than average
               </div>
             </div>
+          </FadeIn>
 
-            {/* Bottom-right: Inflammation */}
-            <div className="absolute right-[7%] bottom-[8%] z-10 w-[190px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 -rotate-2">
+          {/* Bottom-right: Inflammation */}
+          <FadeIn variant="slide-left" delay={1.05} x={30} className="absolute right-[7%] bottom-[8%] z-10">
+            <div className="w-[190px] bg-white/75 backdrop-blur-xl rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50 -rotate-2">
               <div className="text-[10px] font-semibold text-charcoal/45 uppercase tracking-wider mb-2">
                 Inflammation
               </div>
-              {/* Mini sparkline */}
-              <svg
-                width="140"
-                height="32"
-                viewBox="0 0 140 32"
-                className="mb-1"
-              >
+              {/* Sparkline — draws in, then loops */}
+              <svg width="140" height="32" viewBox="0 0 140 32" className="mb-1">
                 <polyline
                   points="0,28 30,22 60,18 90,12 120,6 140,4"
                   fill="none"
@@ -192,17 +267,36 @@ export function Labs() {
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
+                  style={looping ? {
+                    strokeDasharray: 145,
+                    strokeDashoffset: 0,
+                    animation: `labs-sparkline-draw 8.5s ${EASE_SMOOTH} infinite`,
+                  } : {
+                    strokeDasharray: 145,
+                    strokeDashoffset: v ? 0 : 145,
+                    transition: tr(["stroke-dashoffset"], 1.2, EASE_OUT_EXPO, 1.35),
+                  }}
                 />
               </svg>
-              <div className="flex items-center gap-1.5">
+              <div
+                className="flex items-center gap-1.5"
+                style={looping ? {
+                  animation: `labs-text-reveal 8.5s ${EASE_SMOOTH} 0.2s infinite`,
+                } : {
+                  opacity: v ? 1 : 0,
+                  transition: tr(["opacity"], 0.6, EASE_OUT_EXPO, 1.55),
+                }}
+              >
                 <span className="text-[10px] text-sage font-semibold">↓</span>
                 <span className="text-[10px] text-sage font-medium">
                   Trending down — good
                 </span>
               </div>
             </div>
+          </FadeIn>
 
-            {/* ── Central lifestyle photo ── */}
+          {/* ── Central lifestyle photo ── */}
+          <FadeIn variant="blur-in" delay={0.15} duration={1.2}>
             <div className="relative mx-auto z-[5]">
               <Image
                 src="/images/run-lifestyle-opt.png"
@@ -214,8 +308,8 @@ export function Labs() {
                 priority
               />
             </div>
-          </div>
-        </FadeIn>
+          </FadeIn>
+        </div>
 
         {/* Dual CTAs */}
         <FadeIn variant="fade-up" delay={0.5} y={20}>

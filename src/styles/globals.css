@@ -118,6 +118,90 @@
 }
 
 
+/* ── Labs card looping micro-animations ── */
+
+/* Progress bar: holds at 78%, briefly resets, then refills */
+@keyframes labs-bar-fill {
+  0%, 82% { width: 78%; }
+  91% { width: 0%; }
+  100% { width: 78%; }
+}
+
+/* SVG ring chart: holds drawn, briefly un-draws, then redraws */
+@keyframes labs-ring-draw {
+  0%, 82% { stroke-dashoffset: 0; }
+  91% { stroke-dashoffset: 95; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* SVG sparkline: holds drawn, briefly un-draws, then redraws */
+@keyframes labs-sparkline-draw {
+  0%, 82% { stroke-dashoffset: 0; }
+  91% { stroke-dashoffset: 145; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* Value text: holds visible, briefly fades down, then fades back up */
+@keyframes labs-value-reveal {
+  0%, 82% { opacity: 1; transform: translateY(0); }
+  91% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Supporting text: holds visible, briefly fades, then returns */
+@keyframes labs-text-reveal {
+  0%, 82% { opacity: 1; }
+  91% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Action plan rows: staggered reveal loop */
+@keyframes labs-row-reveal {
+  0%, 80% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Marquee & pulse animations (plain CSS — not Tailwind-managed) ── */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes pulse-ring {
+  0%, 100% { scale: 1; opacity: 1; }
+  50% { scale: 1.06; opacity: 0.55; }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+.animate-marquee-slow {
+  animation: marquee 36s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 32s linear infinite;
+}
+
+.animate-marquee-reverse-slow {
+  animation: marquee-reverse 40s linear infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 4.5s ease-in-out infinite;
+}
+
+.animate-pulse-ring-slow {
+  animation: pulse-ring 6s ease-in-out infinite;
+}
+
 /* ── Reduced motion: respect user preference ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

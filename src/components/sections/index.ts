@@ -2,6 +2,7 @@ export { Nav } from "./Nav";
 export { Hero } from "./Hero";
 export { Baseline } from "./Baseline";
 export { Coverage } from "./Coverage";
+export { Advisors } from "./Advisors";
 export { Labs } from "./Labs";
 export { Signal } from "./Signal";
 export { Approach } from "./Approach";

@@ -6,8 +6,12 @@ import { navItems } from "@/lib/tokens";
 /** IDs (or selectors) of sections that have dark backgrounds */
 const DARK_SECTIONS = new Set(["hero"]);
 
+/** Scroll distance (px) over which the nav shrinks from wide to compact */
+const SHRINK_THRESHOLD = 100;
+
 export function Nav() {
   const [onDark, setOnDark] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const rafRef = useRef<number>(0);
 
@@ -16,6 +20,9 @@ export function Nav() {
     rafRef.current = requestAnimationFrame(() => {
       const header = headerRef.current;
       if (!header) return;
+
+      // Track scroll for width transition
+      setScrolled(window.scrollY > SHRINK_THRESHOLD);
 
       // Sample point: centre-x of the nav, just below it
       const rect = header.getBoundingClientRect();
@@ -79,10 +86,11 @@ export function Nav() {
       <nav
         className={`
           pointer-events-auto flex items-center gap-2
-          max-w-[780px] w-full
+          w-full
           backdrop-blur-[20px] backdrop-saturate-[1.8]
           rounded-full px-3 py-2
-          transition-[background-color,border-color,box-shadow] duration-500 ease-out
+          transition-[max-width,background-color,border-color,box-shadow] duration-500 ease-out
+          ${scrolled ? "max-w-[780px]" : "max-w-[1100px]"}
           ${
             onDark
               ? "bg-white/[0.08] border border-white/[0.12] shadow-[0_4px_30px_rgba(0,0,0,0.12),inset_0_0.5px_0_rgba(255,255,255,0.15)]"

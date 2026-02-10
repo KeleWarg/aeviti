@@ -57,7 +57,7 @@ export function FAQ() {
                   onClick={() => setOpenIndex(isOpen ? null : i)}
                   className={`
                     bg-white rounded-[10px] px-6 py-[18px] cursor-pointer
-                    border transition-colors duration-200
+                    border transition-colors duration-300 ease-out
                     ${isOpen ? "border-terra/[0.15]" : "border-stone/[0.12]"}
                   `}
                 >
@@ -69,23 +69,34 @@ export function FAQ() {
                       className="font-body text-[22px] text-terra leading-none"
                       style={{
                         transform: isOpen ? "rotate(45deg)" : "rotate(0)",
-                        transition: "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                        transition: "transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
                       }}
                     >
                       +
                     </span>
                   </div>
+                  {/* grid-row trick gives smooth natural height animation */}
                   <div
-                    className="overflow-hidden"
+                    className="grid"
                     style={{
-                      maxHeight: isOpen ? 200 : 0,
-                      opacity: isOpen ? 1 : 0,
-                      transition: "max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                      gridTemplateRows: isOpen ? "1fr" : "0fr",
+                      transition: "grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                     }}
                   >
-                    <p className="font-body text-body-sm text-warm-gray leading-relaxed mt-3.5 pt-3.5 border-t border-stone/[0.15]">
-                      {faq.a}
-                    </p>
+                    <div className="overflow-hidden">
+                      <div
+                        style={{
+                          opacity: isOpen ? 1 : 0,
+                          transition: isOpen
+                            ? "opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0.08s"
+                            : "opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+                        }}
+                      >
+                        <p className="font-body text-body-sm text-warm-gray leading-relaxed mt-3.5 pt-3.5 border-t border-stone/[0.15]">
+                          {faq.a}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </FadeIn>

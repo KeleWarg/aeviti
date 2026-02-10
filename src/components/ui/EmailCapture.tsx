@@ -38,7 +38,7 @@ export function EmailCapture({
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`flex items-center gap-3 ${className}`}>
+    <form onSubmit={handleSubmit} className={`inline-flex items-center gap-3 ${className}`}>
       <div
         className="relative transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{ width: focused ? 320 : 220 }}
@@ -69,7 +69,7 @@ export function EmailCapture({
       </div>
       <button
         type="submit"
-        className="flex items-center gap-2 bg-white text-charcoal font-body text-[15px] font-medium px-7 py-3.5 rounded-full whitespace-nowrap cursor-pointer hover:bg-white/90 transition-colors shrink-0"
+        className="flex items-center gap-2 bg-terra text-white font-body text-[15px] font-medium px-7 py-3.5 rounded-full whitespace-nowrap cursor-pointer hover:bg-[#006641] transition-colors shrink-0"
       >
         {buttonText} <span>→</span>
       </button>
