@@ -117,39 +117,6 @@
   display: none;
 }
 
-/* ── Hero glass / water shimmer ── */
-@keyframes shimmer-drift-a {
-  0%   { transform: translate(0%, 0%) rotate(0deg); }
-  25%  { transform: translate(5%, -8%) rotate(3deg); }
-  50%  { transform: translate(-3%, 4%) rotate(-2deg); }
-  75%  { transform: translate(6%, 6%) rotate(4deg); }
-  100% { transform: translate(0%, 0%) rotate(0deg); }
-}
-
-@keyframes shimmer-drift-b {
-  0%   { transform: translate(0%, 0%) rotate(0deg); }
-  30%  { transform: translate(-6%, 5%) rotate(-3deg); }
-  60%  { transform: translate(4%, -6%) rotate(2deg); }
-  100% { transform: translate(0%, 0%) rotate(0deg); }
-}
-
-.hero-shimmer-a {
-  background:
-    radial-gradient(ellipse 60% 40% at 30% 40%, rgba(255,255,255,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 50% at 70% 60%, rgba(255,255,255,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 50% 20%, rgba(200,220,255,0.06) 0%, transparent 50%);
-  animation: shimmer-drift-a 14s ease-in-out infinite;
-  will-change: transform;
-}
-
-.hero-shimmer-b {
-  background:
-    radial-gradient(ellipse 45% 55% at 60% 35%, rgba(255,255,255,0.10) 0%, transparent 65%),
-    radial-gradient(ellipse 55% 35% at 25% 70%, rgba(180,210,240,0.07) 0%, transparent 55%),
-    radial-gradient(ellipse 35% 45% at 80% 50%, rgba(255,255,255,0.05) 0%, transparent 50%);
-  animation: shimmer-drift-b 18s ease-in-out infinite;
-  will-change: transform;
-}
 
 /* ── Reduced motion: respect user preference ── */
 @media (prefers-reduced-motion: reduce) {

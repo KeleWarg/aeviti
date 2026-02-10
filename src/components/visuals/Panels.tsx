@@ -1,9 +1,21 @@
+"use client";
+
 /**
  * Rich visual illustrations for inside cards.
  * Inspired by Function Health's approach of showing mini product UIs.
  */
 
 import { colors } from "@/lib/tokens";
+import { useInView } from "@/lib/hooks";
+
+/* ── Animation helpers ── */
+const EASE_OUT_EXPO = "cubic-bezier(0.16, 1, 0.3, 1)";
+const SPRING = "cubic-bezier(0.34, 1.56, 0.64, 1)";
+
+/** Build a CSS transition string from props, duration, easing, and delay */
+function tr(props: string[], duration: number, easing: string, delay: number) {
+  return props.map((p) => `${p} ${duration}s ${easing} ${delay}s`).join(", ");
+}
 
 /* ── Mini scheduling widget ── */
 export function SchedulingVisual() {
@@ -110,8 +122,10 @@ export function BiomarkerChartVisual() {
   );
 }
 
-/* ── Protocol / action items ── */
+/* ── Protocol / action items (animated) ── */
 export function ProtocolVisual() {
+  const [ref, v] = useInView(0.15);
+
   const items = [
     { emoji: "🥗", label: "Nutrition", desc: "Anti-inflammatory foods, omega-3 rich...", color: colors.sage.DEFAULT },
     { emoji: "💊", label: "Supplements", desc: "Vitamin D3, Magnesium glycinate...", color: colors.terra.DEFAULT },
@@ -119,57 +133,126 @@ export function ProtocolVisual() {
   ];
 
   return (
-    <div className="mt-5 flex flex-col gap-2">
-      {items.map((item, i) => (
-        <div key={i} className="flex items-center gap-3 bg-white rounded-[10px] px-3.5 py-2.5 border border-stone/[0.15]">
+    <div ref={ref} className="mt-5 flex flex-col gap-2">
+      {items.map((item, i) => {
+        const d = i * 0.12; // stagger delay per item
+        return (
           <div
-            className="w-[34px] h-[34px] rounded-[9px] shrink-0 flex items-center justify-center text-[15px]"
-            style={{ background: item.color + "15" }}
+            key={i}
+            className="flex items-center gap-3 bg-white rounded-[10px] px-3.5 py-2.5 border border-stone/[0.15]"
+            style={{
+              opacity: v ? 1 : 0,
+              transform: v ? "translateY(0)" : "translateY(14px)",
+              transition: tr(["opacity", "transform"], 0.7, EASE_OUT_EXPO, d),
+            }}
           >
-            {item.emoji}
+            {/* Emoji icon — spring scale-in */}
+            <div
+              className="w-[34px] h-[34px] rounded-[9px] shrink-0 flex items-center justify-center text-[15px]"
+              style={{
+                background: item.color + "15",
+                transform: v ? "scale(1)" : "scale(0.5)",
+                opacity: v ? 1 : 0,
+                transition: tr(["transform", "opacity"], 0.5, SPRING, d + 0.08),
+              }}
+            >
+              {item.emoji}
+            </div>
+            <div className="min-w-0">
+              <div className="font-body text-[13px] font-semibold text-charcoal">{item.label}</div>
+              <div className="font-body text-[11px] text-warm-gray truncate">{item.desc}</div>
+            </div>
           </div>
-          <div className="min-w-0">
-            <div className="font-body text-[13px] font-semibold text-charcoal">{item.label}</div>
-            <div className="font-body text-[11px] text-warm-gray truncate">{item.desc}</div>
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
 
-/* ── Biomarker result card ── */
+/* ── Biomarker result card (animated) ── */
 export function ResultCardVisual() {
+  const [ref, v] = useInView(0.15);
+
   return (
-    <div className="bg-white rounded-[10px] p-3.5 border border-stone/[0.15] mt-4">
+    <div ref={ref} className="bg-white rounded-[10px] p-3.5 border border-stone/[0.15] mt-4">
+      {/* Title + category + pill */}
       <div className="flex justify-between items-center mb-2.5">
-        <div>
+        <div
+          style={{
+            opacity: v ? 1 : 0,
+            transform: v ? "translateY(0)" : "translateY(8px)",
+            transition: tr(["opacity", "transform"], 0.7, EASE_OUT_EXPO, 0),
+          }}
+        >
           <div className="font-body text-body-xs font-semibold text-charcoal">Apolipoprotein B</div>
           <div className="font-body text-[10px] text-warm-gray">Heart & metabolic</div>
         </div>
-        <div className="bg-sage/[0.12] text-success font-mono text-[10px] font-semibold px-2 py-0.5 rounded-full">
+        {/* Optimal pill — spring scale-in */}
+        <div
+          className="bg-sage/[0.12] text-success font-mono text-[10px] font-semibold px-2 py-0.5 rounded-full"
+          style={{
+            opacity: v ? 1 : 0,
+            transform: v ? "scale(1)" : "scale(0.7)",
+            transition: tr(["opacity", "transform"], 0.6, SPRING, 0.15),
+          }}
+        >
           Optimal
         </div>
       </div>
-      <div className="flex items-baseline gap-1 mb-2">
+
+      {/* Value */}
+      <div
+        className="flex items-baseline gap-1 mb-2"
+        style={{
+          opacity: v ? 1 : 0,
+          transform: v ? "translateY(0)" : "translateY(10px)",
+          transition: tr(["opacity", "transform"], 0.7, EASE_OUT_EXPO, 0.25),
+        }}
+      >
         <span className="font-display text-[28px] font-normal text-petrol">82</span>
         <span className="font-body text-[11px] text-warm-gray">mg/dL</span>
       </div>
-      <div className="w-full h-[5px] bg-cream rounded-full relative">
-        <div className="absolute left-[20%] right-[15%] top-0 h-[5px] bg-sage/20 rounded-full" />
-        <div className="absolute left-[52%] top-[-3px] w-[11px] h-[11px] bg-sage rounded-full border-2 border-white" />
+
+      {/* Range bar */}
+      <div
+        className="w-full h-[5px] bg-cream rounded-full relative"
+        style={{
+          opacity: v ? 1 : 0,
+          transition: tr(["opacity"], 0.5, EASE_OUT_EXPO, 0.3),
+        }}
+      >
+        {/* Fill zone — scaleX from left */}
+        <div
+          className="absolute left-[20%] right-[15%] top-0 h-[5px] bg-sage/20 rounded-full"
+          style={{
+            transform: v ? "scaleX(1)" : "scaleX(0)",
+            transformOrigin: "left",
+            transition: tr(["transform"], 0.8, EASE_OUT_EXPO, 0.4),
+          }}
+        />
+        {/* Indicator dot — spring pop */}
+        <div
+          className="absolute left-[52%] top-[-3px] w-[11px] h-[11px] bg-sage rounded-full border-2 border-white"
+          style={{
+            opacity: v ? 1 : 0,
+            transform: v ? "scale(1)" : "scale(0)",
+            transition: tr(["opacity", "transform"], 0.5, SPRING, 0.55),
+          }}
+        />
       </div>
     </div>
   );
 }
 
-/* ── Progress bar chart ── */
+/* ── Progress bar chart (animated) ── */
 export function TimelineVisual() {
+  const [ref, v] = useInView(0.15);
+
   const heights = [30, 42, 55, 62, 70];
   const months = ["Jan", "Mar", "Jun", "Sep", "Dec"];
 
   return (
-    <div className="mt-4">
+    <div ref={ref} className="mt-4">
       <div className="flex items-end gap-1.5 h-20 mb-1.5">
         {heights.map((h, i) => (
           <div
@@ -181,13 +264,23 @@ export function TimelineVisual() {
                 i === heights.length - 1
                   ? `linear-gradient(to top, ${colors.terra.DEFAULT}, ${colors.terra.light})`
                   : `linear-gradient(to top, ${colors.sand.DEFAULT}40, ${colors.sand.DEFAULT}20)`,
+              transform: v ? "scaleY(1)" : "scaleY(0)",
+              transformOrigin: "bottom",
+              transition: tr(["transform"], 0.7, EASE_OUT_EXPO, i * 0.08),
             }}
           />
         ))}
       </div>
       <div className="flex gap-1.5">
         {months.map((m, i) => (
-          <div key={i} className="flex-1 text-center font-mono text-[9px] text-stone">
+          <div
+            key={i}
+            className="flex-1 text-center font-mono text-[9px] text-stone"
+            style={{
+              opacity: v ? 1 : 0,
+              transition: tr(["opacity"], 0.5, EASE_OUT_EXPO, i * 0.08 + 0.1),
+            }}
+          >
             {m}
           </div>
         ))}

@@ -239,13 +239,13 @@ export function Labs() {
           <div className="flex items-center justify-center gap-4 mt-10 pb-20 relative z-20">
             <a
               href="#waitlist"
-              className="font-body text-[14px] font-semibold text-white bg-charcoal px-8 py-3.5 rounded-full hover:bg-rich-black transition-colors shadow-[0_4px_16px_rgba(0,0,0,0.15)]"
+              className="font-body text-[14px] font-medium text-white bg-charcoal px-8 py-3.5 rounded-full hover:bg-rich-black transition-colors shadow-[0_4px_16px_rgba(0,0,0,0.15)]"
             >
               Start my labs
             </a>
             <a
               href="#baseline"
-              className="font-body text-[14px] font-semibold text-charcoal bg-white/60 backdrop-blur-sm border border-charcoal/10 px-8 py-3.5 rounded-full hover:bg-white/80 transition-colors"
+              className="font-body text-[14px] font-medium text-charcoal bg-white/60 backdrop-blur-sm border border-charcoal/10 px-8 py-3.5 rounded-full hover:bg-white/80 transition-colors"
             >
               Learn more
             </a>
@@ -331,7 +331,7 @@ export function Labs() {
               </p>
               <a
                 href="#approach"
-                className="inline-flex items-center gap-2 font-body text-[13px] font-semibold text-charcoal bg-white/50 border border-charcoal/8 px-6 py-2.5 rounded-full hover:bg-white/70 transition-colors"
+                className="inline-flex items-center gap-2 font-body text-[13px] font-medium text-charcoal bg-white/50 border border-charcoal/8 px-6 py-2.5 rounded-full hover:bg-white/70 transition-colors"
               >
                 Explore the plan
               </a>
@@ -433,7 +433,7 @@ export function Labs() {
               <div className="px-10 pb-8 pt-4 relative z-10">
                 <a
                   href="#coverage"
-                  className="inline-flex items-center font-body text-[13px] font-semibold text-white bg-charcoal/80 px-6 py-2.5 rounded-full hover:bg-charcoal transition-colors"
+                  className="inline-flex items-center font-body text-[13px] font-medium text-white bg-charcoal/80 px-6 py-2.5 rounded-full hover:bg-charcoal transition-colors"
                 >
                   Meet the markers
                 </a>
@@ -499,7 +499,7 @@ export function Labs() {
               <div className="px-10 pb-8 pt-4 relative z-10">
                 <a
                   href="#baseline"
-                  className="inline-flex items-center font-body text-[13px] font-semibold text-white bg-charcoal/80 px-6 py-2.5 rounded-full hover:bg-charcoal transition-colors"
+                  className="inline-flex items-center font-body text-[13px] font-medium text-white bg-charcoal/80 px-6 py-2.5 rounded-full hover:bg-charcoal transition-colors"
                 >
                   Learn more
                 </a>

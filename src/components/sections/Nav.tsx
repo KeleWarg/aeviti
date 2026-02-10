@@ -134,7 +134,7 @@ export function Nav() {
         {/* CTA */}
         <a
           href="#waitlist"
-          className="inline-flex items-center gap-1.5 bg-terra text-white font-body text-[13px] font-semibold pl-5 pr-4 py-2.5 rounded-full cursor-pointer hover:bg-terra-dark transition-colors whitespace-nowrap shrink-0"
+          className="inline-flex items-center gap-1.5 bg-terra text-white font-body text-[13px] font-medium pl-5 pr-4 py-2.5 rounded-full cursor-pointer hover:bg-terra-dark transition-colors whitespace-nowrap shrink-0"
         >
           Join waitlist
         </a>

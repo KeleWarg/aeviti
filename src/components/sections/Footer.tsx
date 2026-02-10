@@ -16,7 +16,7 @@ export function Footer() {
             <div className="flex gap-2.5">
               <a
                 href="#waitlist"
-                className="inline-flex items-center gap-1.5 bg-terra text-white font-body text-[13px] font-semibold px-5 py-2.5 rounded-full cursor-pointer hover:bg-terra-dark transition-colors"
+                className="inline-flex items-center gap-1.5 bg-terra text-white font-body text-[13px] font-medium px-5 py-2.5 rounded-full cursor-pointer hover:bg-terra-dark transition-colors"
               >
                 Join waitlist <span>→</span>
               </a>
