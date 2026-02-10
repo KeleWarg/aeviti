@@ -57,7 +57,6 @@ export const categoryColors = {
   metabolic: colors.sand.DEFAULT,
   inflammation: colors.sage.DEFAULT,
   hormone: colors.sky,
-  aging: colors.blush,
 } as const;
 
 /**
@@ -68,7 +67,6 @@ export const categories = [
   { key: "metabolic", name: "Metabolic", count: 18, desc: "Glucose, lipids, insulin signals — mapped to steady habits.", markers: ["HbA1c", "Insulin", "LDL-P", "ApoB"] },
   { key: "inflammation", name: "Inflammation", count: 14, desc: "Interpreted with conservative, safe guidance.", markers: ["hs-CRP", "IL-6", "Homocysteine", "ESR"] },
   { key: "hormone", name: "Hormone", count: 16, desc: "Explained clearly, without hype.", markers: ["TSH", "Free T4", "Cortisol", "DHEA"] },
-  { key: "aging", name: "Aging", count: 12, desc: "Long-horizon signals for longevity-minded decisions.", markers: ["IGF-1", "SHBG", "Vitamin D", "Telomere"] },
 ] as const;
 
 /**

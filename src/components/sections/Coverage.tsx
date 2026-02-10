@@ -8,7 +8,6 @@ const categorySubtitles: Record<string, string> = {
   metabolic: "to map your energy systems",
   inflammation: "to track silent signals",
   hormone: "to decode your balance",
-  aging: "to measure what matters long-term",
 };
 
 export function Coverage() {
@@ -26,11 +25,11 @@ export function Coverage() {
           </FadeIn>
           <TextReveal
             as="h2"
-            className="font-display text-[40px] leading-[1.1] font-bold text-charcoal mb-4 max-w-[600px]"
+            className="font-display text-[42px] leading-[1.12] font-normal text-charcoal tracking-tight mb-4 max-w-[600px]"
             delay={0.3}
             stagger={0.12}
           >
-            82 markers,{" "}
+            70 markers,{" "}
             <span className="text-terra font-medium">interpreted with care</span>
           </TextReveal>
           <FadeIn variant="blur-up" delay={0.65} y={16}>

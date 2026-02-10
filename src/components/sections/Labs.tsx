@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FadeIn, TextReveal } from "@/components/ui";
 
 export function Labs() {
@@ -21,7 +22,7 @@ export function Labs() {
           </FadeIn>
           <TextReveal
             as="h2"
-            className="font-display text-[56px] leading-[1.05] font-bold text-charcoal"
+            className="font-display text-[42px] leading-[1.12] font-normal text-charcoal tracking-tight"
             delay={0.1}
             stagger={0.15}
           >
@@ -201,35 +202,17 @@ export function Labs() {
               </div>
             </div>
 
-            {/* ── Central lifestyle photo placeholder ── */}
-            <div className="relative mx-auto w-[380px] h-[520px] rounded-[36px] overflow-hidden z-[5]">
-              <div className="absolute inset-0 bg-gradient-to-b from-[#c9a87c]/30 via-[#c9a87c]/50 to-[#c9a87c]/70" />
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-                <svg
-                  width="48"
-                  height="48"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  className="text-charcoal/15"
-                >
-                  <path
-                    d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                  <circle
-                    cx="12"
-                    cy="7"
-                    r="4"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  />
-                </svg>
-                <span className="font-body text-[13px] text-charcoal/20 font-medium">
-                  Lifestyle photo
-                </span>
-              </div>
+            {/* ── Central lifestyle photo ── */}
+            <div className="relative mx-auto z-[5]">
+              <Image
+                src="/images/run-lifestyle-opt.png"
+                alt="Active lifestyle"
+                width={2000}
+                height={1334}
+                className="w-auto max-h-[520px] mx-auto"
+                quality={100}
+                priority
+              />
             </div>
           </div>
         </FadeIn>
@@ -356,42 +339,43 @@ export function Labs() {
 
               {/* Floating marker tags + photo placeholder */}
               <div className="relative flex-1 px-6 overflow-hidden">
-                <div className="flex flex-wrap gap-1.5 opacity-35 px-2">
-                  {[
-                    "Cholesterol",
-                    "Heart",
-                    "LDL",
-                    "ApoB",
-                    "Glucose",
-                    "Metabolism",
-                    "HbA1c",
-                    "Globin A1c",
-                    "Fasting Insulin",
-                    "TSH",
-                    "Thyroid",
-                    "Cortisol",
-                    "Inflammation",
-                    "Hormone",
-                    "Follicle",
-                    "DHEA-Sulfate",
-                    "Testosterone",
-                    "Sulfate",
-                    "Iron",
-                    "Ferritin",
-                    "T3",
-                    "Free T4",
-                    "Ratio",
-                    "Total Protein",
-                    "Immune",
-                    "Count",
-                    "Homocysteine",
-                  ].map((tag) => (
-                    <span
-                      key={tag}
-                      className="font-body text-[11px] font-medium text-charcoal bg-white/45 border border-charcoal/5 px-2.5 py-1 rounded-full whitespace-nowrap"
-                    >
-                      {tag}
-                    </span>
+                {/* Marquee pill rows — infinite looping carousel */}
+                <div className="flex flex-col gap-1.5 opacity-35 px-2">
+                  {(
+                    [
+                      {
+                        tags: ["Cholesterol", "Heart", "LDL", "ApoB", "Glucose", "Metabolism", "HbA1c"],
+                        anim: "animate-marquee",
+                      },
+                      {
+                        tags: ["Globin A1c", "Fasting Insulin", "TSH", "Thyroid", "Cortisol", "Inflammation"],
+                        anim: "animate-marquee-reverse",
+                      },
+                      {
+                        tags: ["Hormone", "Follicle", "DHEA-Sulfate", "Testosterone", "Sulfate", "Iron", "Ferritin"],
+                        anim: "animate-marquee-slow",
+                      },
+                      {
+                        tags: ["T3", "Free T4", "Ratio", "Total Protein", "Immune", "Count", "Homocysteine"],
+                        anim: "animate-marquee-reverse-slow",
+                      },
+                    ] as const
+                  ).map((row, ri) => (
+                    <div key={ri} className="overflow-hidden">
+                      <div className={`flex gap-1.5 ${row.anim}`} style={{ width: "max-content" }}>
+                        {/* Original + duplicate for seamless loop */}
+                        {[0, 1].map((copy) =>
+                          row.tags.map((tag) => (
+                            <span
+                              key={`${copy}-${tag}`}
+                              className="font-body text-[11px] font-medium text-charcoal bg-white/45 border border-charcoal/5 px-2.5 py-1 rounded-full whitespace-nowrap"
+                            >
+                              {tag}
+                            </span>
+                          ))
+                        )}
+                      </div>
+                    </div>
                   ))}
                 </div>
 
@@ -467,9 +451,9 @@ export function Labs() {
                     <div className="w-[80px] h-[100px] rounded-[30px] bg-gradient-to-b from-[#eedcc5] to-[#dfc9a8] mx-auto border border-[#c9a87c]/20" />
                   </div>
 
-                  {/* Glow rings */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full border border-terra/10" />
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] h-[260px] rounded-full border border-terra/5" />
+                  {/* Glow rings — gentle pulse scale */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full border border-terra/10 animate-pulse-ring" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] h-[260px] rounded-full border border-terra/5 animate-pulse-ring-slow" />
 
                   {/* Badge */}
                   <div className="absolute top-[25%] right-[-50px] bg-white/80 backdrop-blur-sm rounded-full pl-2 pr-3.5 py-1.5 shadow-md border border-white/50 flex items-center gap-2">

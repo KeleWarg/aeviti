@@ -90,10 +90,28 @@ const config: Config = {
           from: { opacity: "0" },
           to: { opacity: "1" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        "marquee-reverse": {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        "pulse-ring": {
+          "0%, 100%": { scale: "1", opacity: "1" },
+          "50%": { scale: "1.06", opacity: "0.55" },
+        },
       },
       animation: {
         "fade-in-up": "fade-in-up 0.7s ease forwards",
         "fade-in": "fade-in 0.5s ease forwards",
+        marquee: "marquee 28s linear infinite",
+        "marquee-slow": "marquee 36s linear infinite",
+        "marquee-reverse": "marquee-reverse 32s linear infinite",
+        "marquee-reverse-slow": "marquee-reverse 40s linear infinite",
+        "pulse-ring": "pulse-ring 4.5s ease-in-out infinite",
+        "pulse-ring-slow": "pulse-ring 6s ease-in-out infinite",
       },
     },
   },
